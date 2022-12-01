@@ -22,6 +22,7 @@ class SudokuGenerator:
 	Return:
 	None
     '''
+    board = generate_sudoku(self.row_length, self.removed_cells)
 
     def __init__(self, row_length, removed_cells):
         self.row_Length = 9
@@ -235,7 +236,7 @@ class SudokuGenerator:
 	Return: None
     '''
     def remove_cells(self):
-
+        pass
 
 '''
 DO NOT CHANGE
