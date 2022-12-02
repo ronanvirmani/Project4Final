@@ -22,11 +22,12 @@ class SudokuGenerator:
 	Return:
 	None
     '''
-    board = generate_sudoku(self.row_length, self.removed_cells)
 
     def __init__(self, row_length, removed_cells):
-        self.row_Length = 9
+        self.row_length = 9
         self.removed_cells = removed_cells
+        self.board = self.get_board()
+        self.box_length = math.sqrt(row_length)
 
     '''
 	Returns a 2D python list of numbers which represents the board
@@ -35,8 +36,7 @@ class SudokuGenerator:
 	Return: list[list]
     '''
     def get_board(self):
-        board = generate_sudoku(self.row_length, self.removed_cells)
-        return board
+        return self.board
 
     '''
 	Displays the board to the console
@@ -46,10 +46,9 @@ class SudokuGenerator:
 	Return: None
     '''
     def print_board(self):
-        board = generate_sudoku(self.row_length, self.removed_cells)
-        for i in range(9):
-            for j in range(9):
-                print(board[i][j], end = " ")
+        for i in range(self.row_length):
+            for j in range(self.row_length):
+                print(self.board[i][j], end = " ")
             print()
 
     '''
@@ -63,9 +62,8 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def valid_in_row(self, row, num):
-        board = generate_sudoku(self.row_length, self.removed_cells)
-        for i in range(9):
-            if board[row][i] == num:
+        for i in range(self.row_length):
+            if self.board[row][i] == num:
                 return False
         return False
 
@@ -80,9 +78,8 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def valid_in_col(self, col, num):
-        board = generate_sudoku(self.row_length, self.removed_cells)
-        for j in range(9):
-            if board[j][col] == num:
+        for j in range(self.row_length):
+            if self.board[j][col] == num:
                 return False
         return True
 
@@ -99,10 +96,9 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def valid_in_box(self, row_start, col_start, num):
-        board = generate_sudoku(self.row_length, self.removed_cells)
-        for i in range(3):
-            for j in range(3):
-                if board[row_start + i][col_start + 1] == num:
+        for i in range(self.box_length):
+            for j in range(self.box_length):
+                if self.board[row_start + i][col_start + 1] == num:
                     return False
         return True
     
@@ -117,18 +113,17 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def is_valid(self, row, col, num):
-        board = generate_sudoku(self.row_length, self.removed_cells)
-        if board.valid_in_row(row,num) & board.valid_in_col(col,num):
+        if self.board.valid_in_row(row,num) & self.board.valid_in_col(col,num):
             if row > 3:
                 if row > 6:
-                    if board.valid_in_box(7, 7, num):
+                    if self.board.valid_in_box(7, 7, num):
                         return True
                     return False
                 else:
-                    if board.valid_in_box(4, 4, num):
+                    if self.board.valid_in_box(4, 4, num):
                         return True
                     return False
-            if board.valid_in_box(0, 0, num):
+            if self.board.valid_in_box(0, 0, num):
                 return True
         return False
 
@@ -145,14 +140,13 @@ class SudokuGenerator:
 	Return: None
     '''
     def fill_box(self, row_start, col_start):
-        board = generate_sudoku(self.row_length, self.removed_cells)
         used_numbers = []
         for i in range(row_start, row_start+2):
             for j in range(col_start, col_start+2):
                 random_number = random.randint(1, 9)
                 while random_number in used_numbers:
                     random_number = random.randint(1, 9)
-                board[i][j] = random_number
+                self.board[i][j] = random_number
                 used_numbers.append(random_number)
 
 
@@ -164,13 +158,12 @@ class SudokuGenerator:
 	Return: None
     '''
     def fill_diagonal(self):
-        board = generate_sudoku(self.row_length, self.removed_cells)
         used_numbers = []
-        for i, j in range(9):
-            random_number = random.randint(1, 9)
+        for i, j in range(self.row_length):
+            random_number = random.randint(1, self.row_length)
             while random_number in used_numbers:
-                random_number = random.randint(1, 9)
-            board[i][j] = random_number
+                random_number = random.randint(1, self.row_length)
+            self.board[i][j] = random_number
             used_numbers.append(random_number)
     '''
     DO NOT CHANGE
