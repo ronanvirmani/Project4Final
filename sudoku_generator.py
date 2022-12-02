@@ -26,7 +26,7 @@ class SudokuGenerator:
     def __init__(self, row_length, removed_cells):
         self.row_length = 9
         self.removed_cells = removed_cells
-        self.board = self.get_board()
+        self.board = generate_sudoku(row_length, removed_cells)
         self.box_length = math.sqrt(row_length)
 
     '''
@@ -144,7 +144,7 @@ class SudokuGenerator:
         for i in range(row_start, row_start+2):
             for j in range(col_start, col_start+2):
                 random_number = random.randint(1, 9)
-                while random_number in used_numbers:
+                while random_number not in used_numbers:
                     random_number = random.randint(1, 9)
                 self.board[i][j] = random_number
                 used_numbers.append(random_number)
@@ -161,7 +161,7 @@ class SudokuGenerator:
         used_numbers = []
         for i, j in range(self.row_length):
             random_number = random.randint(1, self.row_length)
-            while random_number in used_numbers:
+            while random_number not in used_numbers:
                 random_number = random.randint(1, self.row_length)
             self.board[i][j] = random_number
             used_numbers.append(random_number)
@@ -229,7 +229,12 @@ class SudokuGenerator:
 	Return: None
     '''
     def remove_cells(self):
-        pass
+        i = 0
+        while i < self.removed_cells:
+            x = random.randint(0,8)
+            y = random.randint
+
+
 
 '''
 DO NOT CHANGE
