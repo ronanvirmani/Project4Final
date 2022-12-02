@@ -29,6 +29,7 @@ class SudokuGenerator:
         self.board = [[" " for i in range(row_length)] for j in range(row_length)]
         self.box_length = int(math.sqrt(row_length))
         self.fill_values()
+        self.remove_cells()
 
 
 
@@ -65,7 +66,7 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def valid_in_row(self, row, num):
-        for i in range(self.row_length - 1):
+        for i in range(self.row_length):
             if self.board[row][i] == num:
                 return False
         return True
@@ -81,7 +82,7 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def valid_in_col(self, col, num):
-        for j in range(self.row_length - 1):
+        for j in range(self.row_length):
             if self.board[j][col] == num:
                 return False
         return True
@@ -99,8 +100,8 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def valid_in_box(self, row_start, col_start, num):
-        for i in range(row_start, self.row_length):
-            for j in range(col_start, self.row_length):
+        for i in range(row_start, row_start + 3):
+            for j in range(col_start, col_start + 3):
                 if self.board[i][j] == num:
                     return False
         return True
@@ -116,7 +117,9 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def is_valid(self, row, col, num):
-        if self.valid_in_row(row,num) and self.valid_in_col(col,num) and self.valid_in_box(row,col,num):
+        if self.valid_in_row(row,num) and self.valid_in_col(col,num) and self.valid_in_box(row - row % 3,col - col % 3,num):
+            return True
+            '''
             if row > 2:
                 if row > 5:
                     if self.valid_in_box(6, 6, num):
@@ -128,8 +131,9 @@ class SudokuGenerator:
                     return False
             if self.valid_in_box(0, 0, num):
                 return True
-
+        '''
         return False
+
 
 
 
@@ -148,7 +152,6 @@ class SudokuGenerator:
             for j in range(col_start, col_start + 3):
                 random_number = random.randint(1, 9)
                 while self.is_valid(i,j,random_number) == False:
-                    print("here4")
                     random_number = random.randint(1,9)
                 self.board[i][j] = random_number
 
@@ -198,10 +201,10 @@ class SudokuGenerator:
                 if row >= self.row_length:
                     return True
         
-        for num in range(1, self.row_length - 1):
+        for num in range(1, self.row_length + 1):
             if self.is_valid(row, col, num):
                 self.board[row][col] = num
-                if self.fill_remaining(row, col - 1):
+                if self.fill_remaining(row, col + 1):
                     return True
                 self.board[row][col] = 0
         return False
@@ -236,7 +239,7 @@ class SudokuGenerator:
             row = random.randint(0,8)
             col = random.randint(0,8)
             if self.board[row][col] != 0:
-                self.board[row][col] == 0
+                self.board[row][col] = 0
                 i += 1
 
 
