@@ -269,7 +269,7 @@ def generate_sudoku(size, removed):
 
 
 def main():
-    board = SudokuGenerator(9, 15)
+    board = SudokuGenerator(9, 50)
     board.print_board()
 
 
