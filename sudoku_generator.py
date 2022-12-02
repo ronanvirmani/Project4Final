@@ -26,7 +26,7 @@ class SudokuGenerator:
     def __init__(self, row_length, removed_cells):
         self.row_length = 9
         self.removed_cells = removed_cells
-        self.board = [[0 for _ in range(row_length)] for _ in range(row_length)]
+        self.board = [[" " for i in range(row_length)] for j in range(row_length)]
         self.box_length = int(math.sqrt(row_length))
         self.fill_values()
 
@@ -148,6 +148,7 @@ class SudokuGenerator:
             for j in range(col_start, col_start + 3):
                 random_number = random.randint(1, 9)
                 while self.is_valid(i,j,random_number) == False:
+                    print("here4")
                     random_number = random.randint(1,9)
                 self.board[i][j] = random_number
 
@@ -161,10 +162,11 @@ class SudokuGenerator:
 	Return: None
     '''
     def fill_diagonal(self):
-        self.fill_box(0,0)
-        self.fill_box(3,3)
-        self.fill_box(6,6)
-
+        #self.fill_box(0,0)
+        #self.fill_box(3,3)
+        #self.fill_box(6,6)
+        for i in range(0, self.row_length, self.box_length):
+            self.fill_box(i, i)
     '''
     DO NOT CHANGE
     Provided for students
@@ -264,7 +266,7 @@ def generate_sudoku(size, removed):
 
 
 def main():
-    board = SudokuGenerator(9, 50)
+    board = SudokuGenerator(9, 15)
     board.print_board()
 
 
