@@ -268,8 +268,11 @@ def generate_sudoku(size, removed):
 
 
 def main():
-    board = generate_sudoku(9, 40)
-    board.print_board()
+     arr = generate_sudoku(9, 40)
+     for i in arr:
+         print("")
+         for j in i:
+             print (j, end = " ")
 
 
 if __name__ == "__main__":
