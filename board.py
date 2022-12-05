@@ -1,3 +1,7 @@
+import pygame
+from cell import Cell
+from constants import *
+
 class Board:
 
     def __init__(self, width, height, screen, difficulty):
@@ -41,7 +45,8 @@ class Board:
     def is_full(self):
         for i in range(self.width):
             for j in range(self.height):
-                if self.board[i][j] == 0
+                if self.board[i][j] == 0:
+
                     return False
         return True
 
